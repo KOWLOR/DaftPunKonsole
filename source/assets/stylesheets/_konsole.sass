@@ -1,0 +1,310 @@
+/*
+ * #DaftPunKonsole
+ * Malik Dellidj - @Dathink
+ *
+ * There are existing apps or flash to do this, but no web version so here it is.
+ *
+ * How to play :
+ * You may notice that in the song all theses words are used
+ * but sometimes in a different layout
+ * e.g.
+ * – Work it, make it, do it, makes us
+ * – Harder, better, faster, stronger
+ * –––
+ * – Work it, harder, make it, better
+ * – Do it, faster, makes us, stronger
+ *
+ * Check the lyrics ! and the different tones to recreate over half of the song !
+ *
+ * Many thanks to my work mates who helped me when I was stuck
+ *
+ * Nb : Hey IE fellaz, get a browser : www.google.com/chrome, it's free !
+ */
+
+html, body
+  height: 100vh
+  width: 100vw
+
+body
+  font: normal 1em/1.45em $font-family
+  background: url(http://s.cdpn.io/190177/Daft_Punk_bg.svg) no-repeat center center $bg-color
+  display: flex
+  align-items: center
+  flex-direction: column
+  justify-content: space-around
+  -webkit-font-smoothing: antialiased
+  color: $neutral-color
+  -webkit-font-smoothing: subpixel-antialiased
+  text-rendering: optimizeLegibility
+  background-size: 95%
+
+
+a
+  text-decoration: none
+  color: $bg-color-light
+
+.extra
+  color: $extra
+
+.lyrics
+  flex: 1
+  align-items: center
+  justify-content: center
+  display: flex
+  font-size: rem-calc(58)
+  position: relative
+  span
+    animation-duration: 1s
+    white-space: nowrap
+    font-weight: 500
+    .Normal &
+      color: $extra
+      text-shadow: rem-calc(0 0 10) rgba($extra, .2)
+    .High &
+      color: $love
+      text-shadow: rem-calc(0 0 10) rgba($love, .2)
+    .Low &
+      color: $gold-helmet
+      text-shadow: rem-calc(0 0 10) rgba($gold-helmet, .2)
+
+.wk
+  display: flex
+  align-items: center
+  justify-content: center
+  flex: 2
+
+.k
+  width: rem-calc(630)
+  padding-right: 2.5%
+  user-select: none
+  -webkit-tap-highlight-color: rgba(0,0,0,0)
+  -webkit-tap-highlight-color: transparent // Hey Androids !
+  .r
+    position: relative
+    display: flex
+    justify-content: space-between
+    margin: rem-calc(10px)
+    &:nth-child(1), &:nth-child(2)
+      i:nth-last-child(-n+4), i:nth-child(-n+4)
+        color: lighten($tint, 25%)
+        &:hover
+          +keycolor($extra)
+        &:active, &.is-active
+          +keycolor($extra, true)
+      .Normal &
+        i:nth-last-child(-n+4), i:nth-child(-n+4)
+          color: lighten($tint, 25%)
+          &:hover
+            +keycolor($extra)
+          &:active, &.is-active
+            +keycolor($extra, true)
+      .High &
+        i:nth-last-child(-n+4), i:nth-child(-n+4)
+          color: lighten($tint, 25%)
+          &:hover
+            +keycolor($love)
+          &:active, &.is-active
+            +keycolor($love, true)
+      .Low &
+        i:nth-child(-n+4)
+          color: $bg-color-light
+          &:hover
+            +keycolor($bg-color-lightened)
+          &:active, &.is-active
+            +keycolor($bg-color-lightened, true)
+        i:nth-last-child(-n+4)
+          color: lighten($tint, 25%)
+          &:hover
+            +keycolor($gold-helmet)
+          &:active, &.is-active
+            +keycolor($gold-helmet, true)
+    &:nth-child(2)
+      +translateX(2.5%)
+    &:nth-child(3)
+      margin-left: 8.5%
+      margin-right: 14%
+      i:nth-child(1)
+        .Normal &
+          b
+            background: $extra
+          +keycolor($extra, true)
+      i:nth-child(2)
+        .High &
+          b
+            background: $love
+          +keycolor($love, true)
+      i:nth-last-child(3)
+        .Low &
+          b
+            background: $gold-helmet
+          +keycolor($gold-helmet, true)
+      i
+        flex-direction: column-reverse
+        b
+          background: $bg-color-light
+          color: $bg-color
+          border-radius: rem-calc(8)
+          padding: 0 rem-calc(5)
+          line-height: 0
+          margin-top: rem-calc(5)
+  i, .space
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    color: $bg-color-light
+    border-radius: rem-calc(6)
+    height: rem-calc($key-size)
+    font-size: rem-calc(16)
+    line-height: 0
+    border: rem-calc(2) solid $bg-color-light
+    position: relative
+    transition: all .08s ease-in-out
+    &:hover
+      border-color: $tint
+      color: $tint
+    &:active, &.is-active
+      border-color: $tint
+      color: $tint
+      box-shadow: rem-calc(0 0 9 -2) $tint
+      +translateY(rem-calc(1))
+  i
+    font-style: normal
+    width: rem-calc($key-size)
+    span, b
+      flex: 2
+      display: flex
+      align-items: center
+    span
+      text-transform: uppercase
+      font-family: 'Varela Round'
+    b
+      font-size: rem-calc(9)
+      flex: 1
+  .space
+    flex: 1
+    max-width: 48.5%
+    margin-left: 27.5%
+    align-items: stretch
+    justify-content: center
+    position: static
+
+.credits
+  font-size: rem-calc(13)
+  display: flex
+  flex-direction: column
+  flex: 1
+  justify-content: center
+  p
+    text-align: center
+  .links
+    margin: rem-calc(5 0)
+    li
+      display: inline-block
+      padding: rem-calc(0 10)
+      border-right: rem-calc(1) solid rgba($bg-color-light, .35)
+      &:last-child
+        border: 0
+
+.fa
+  color: $extra
+  & + a
+    color: $extra
+    &:hover
+      color: $extra
+.fa-heart
+  color: $love
+
+.jp-audio
+  color: $neutral-color
+
+.modal
+  display: flex
+  background: rgba($bg-color, .8)
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  align-items: center
+  justify-content: center
+  flex-direction: column
+  .daft-punk-logo
+    margin: rem-calc(20 0 30)
+  .btn
+    color: $extra
+    border: rem-calc(2) solid $extra
+    padding: rem-calc(10 20)
+    border-radius: rem-calc(50)
+    transition: margin .3s ease
+    &:hover
+      +keycolor($extra, true)
+      text-shadow: rem-calc(0 0 4) rgba($extra, .8)
+  h1
+    font-size: rem-calc(40)
+    font-weight: 100
+    margin: rem-calc(0 0 30 0)
+  h2
+    font-size: rem-calc(20)
+    font-weight: 200
+    margin: rem-calc(0 0 30 0)
+  ul
+    display: flex
+    li
+      margin: rem-calc(20)
+  .fa
+    color: $extra
+    & + a
+      color: $neutral-color
+      &:hover
+        color: $extra
+  .credit
+    margin: rem-calc(20 0 0 0)
+
+.jp-audio
+  position: relative
+  .jp-controls
+    position: absolute
+    button
+      background: transparent
+      border: 0
+      color: $bg-color-lightened
+      text-transform: capitalize
+      font-size: rem-calc(9)
+    .jp-play
+      &:before
+        content: ''
+        height: rem-calc(5)
+        width: rem-calc(5)
+        border-radius: rem-calc(50)
+        background: $bg-color-lightened
+        display: inline-block
+        margin: rem-calc(1 3)
+  &.jp-state-playing
+    .jp-controls
+      .jp-play
+        color: $extra
+        text-shadow: rem-calc(0 0 2) rgba($extra, .8)
+        &:before
+          background: $extra
+          box-shadow: rem-calc(0 0 3) rgba($extra, .8)
+        .High &
+          color: $love
+          text-shadow: rem-calc(0 0 2) rgba($love, .8)
+          &:before
+            background: $love
+            box-shadow: rem-calc(0 0 3) rgba($love, .8)
+        .Low &
+          color: $gold-helmet
+          text-shadow: rem-calc(0 0 2) rgba($gold-helmet, .8)
+          &:before
+            background: $gold-helmet
+            box-shadow: rem-calc(0 0 3) rgba($gold-helmet, .8)
+  .jp-progress
+    height: rem-calc(49)
+    .jp-seek-bar
+      width: 100%
+      height: 100%
+      .jp-play-bar
+        background: rgba($bg-color-light, .2)
+        height: 100%

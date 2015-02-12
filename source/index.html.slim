@@ -1,0 +1,78 @@
+---
+title: DaftPunKonsole by Dathink
+---
+
+- da = [['Work it'], ['Make it'], ['Do it'],['Makes us'],[''],[''],['More than'],['Hour'],['Our'],['Never']]
+- ft = [['Harder'],['Better'],['Faster'],['Stronger'],[''],[''],['Ever'],['After'],['Work is'],['Over']]
+- pu = [['Normal'],['High'],[''],[''],[''],['Low'],[''],['']]
+- nk = [['','32', 'play']]
+
+#js-lyrics.lyrics.animated
+.wk
+  .k
+    .r
+      - da.each do |k|
+        i data-code="" data-lyric=k[0]
+          span
+          - if k[0] != ''
+            b = k[0]
+    .r
+      - ft.each do |k|
+        i data-code="" data-lyric=k[0]
+          span
+          - if k[0] != ''
+            b = k[0]
+    .r.level
+      - pu.each do |k|
+        i data-code="" data-level = k[0]
+          span
+          - if k[0] != ''
+            b = k[0]
+    .r
+      - nk.each do |k|
+        .space data-code = k[1] data-action = k[2]
+          #jp_container_1.jp-audio
+            .jp-type-single
+              .jp-gui.jp-interface
+                .jp-controls
+                  button.jp-play Instrumental
+                .jp-progress
+                  .jp-seek-bar
+                    .jp-play-bar
+
+#js-daft_1.jp-jplayer
+.credits
+  p.extra #DaftPunKonsole
+  p
+    'Made with
+    i.fa.fa-heart>
+    'by Malik Dellidj
+  ul.links
+    li
+      a href="http://github.com/KOWLOR/" target="_blank"
+        i.fa.fa-github
+    li
+      a href="http://codepen.io/kowlor" target="_blank"
+        i.fa.fa-codepen
+    li
+      i.fa.fa-twitter>
+      a href="http://twitter.com/Dathink" target="_blank"
+        '@Dathink
+
+.modal.animated
+  img src="http://s.cdpn.io/190177/Daft_Punk.svg" class="daft-punk-logo"
+  h1 “Harder, Better, Faster, Stronger”
+  h2
+    'Please choose your keyboard
+
+  ul
+    li
+      a href="#" class="js-qwerty btn"
+        'QWERTY
+    li
+      a href="#" class="js-azerty btn"
+        'AZERTY
+  p.credit
+    i.fa.fa-twitter>
+    a href="http://twitter.com/Dathink" target="_blank"
+      '@Dathink

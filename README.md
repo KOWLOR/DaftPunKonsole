@@ -1,3 +1,6 @@
 ### DaftPunKonsole
 
-Hey, come back later !
+    bundle install
+    bower install
+    middleman server
+

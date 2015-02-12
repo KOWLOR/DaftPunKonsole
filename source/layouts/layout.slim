@@ -1,0 +1,18 @@
+doctype html
+
+html
+  head
+    meta charset="utf-8"
+    title #{current_page.data.title}
+    link rel="shortcut icon" href="#{image_path('favicon.ico')}" type="image/x-icon"
+
+    = stylesheet_link_tag 'application'
+    = stylesheet_link_tag 'https://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'
+    = stylesheet_link_tag 'http://fonts.googleapis.com/css?family=Varela+Round'
+
+  body class='#{page_classes}'
+
+    == yield
+
+    = javascript_include_tag 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/190177/ion.min.js'
+    = javascript_include_tag 'application'
