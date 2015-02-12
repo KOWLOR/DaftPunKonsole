@@ -1,0 +1,26 @@
+{
+  "name": "slimmer",
+  "version": "0.0.1",
+  "homepage": "https://github.com/polymatt/slimmer",
+  "authors": [
+    "polymatt <matt@polymathic.me>"
+  ],
+  "description": "Slim/Sass/Coffee Starter template for Middleman",
+  "license": "MIT",
+  "private": false,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "underscore": "~1.7.0",
+    "normalize-css": "~3.0.2",
+    "animate-css": "~3.2.0",
+    "meyer-reset": "*",
+    "jplayer": "~2.9.2",
+    "ionsound": "~3.0.0"
+  }
+}
