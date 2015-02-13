@@ -1,7 +1,7 @@
 FROM ubuntu
 MAINTAINER "Tanguy ⧓ Herrmann <dolanorgit@evereska.org>"
 
-RUN apt-get update -y && apt-get install bundler npm -y
+RUN apt-get update -y && apt-get install git bundler npm -y
 # Kind of an ugly trick, but otherwise bower won't find nodejs
 RUN npm install -g bower && ln -s /usr/bin/nodejs /usr/bin/node
 
