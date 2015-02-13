@@ -1,5 +1,5 @@
 activate :google_analytics do |ga|
-  ga.tracking_id = 'ua-xxxxx'
+  ga.tracking_id = 'UA-59738061-1'
   ga.anonymize_ip = true
   ga.debug = false
   ga.development = false
