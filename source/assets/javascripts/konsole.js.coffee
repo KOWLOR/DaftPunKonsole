@@ -1,4 +1,14 @@
+setKey = (index_row, index_key, key_char, key_code) ->
+  row_selected =  $(".r:nth-child(#{index_row+1})")
+  span_selected =  $(row_selected).find("span")[index_key]
+  $(span_selected).text(key_char)
+  $(span_selected).parent('*[data-code]').attr('data-code', key_code)
+
 initJson = (index_type) ->
+  # HACK: monkey-patch the qwerty keyboard with x,y,oe
+  if index_type == 2
+    patch_qwertz = true
+    index_type = 1
   $.ajax(
     url: 'http://s.cdpn.io/190177/keyboard_.json'
     type: 'get'
@@ -6,13 +16,13 @@ initJson = (index_type) ->
   .done (data) ->
     _.each(data.keyboard.type[index_type].row, (row, index_row) ->
       _.each(row.key, (key, index_key) ->
-        row_selected =  $(".r:nth-child(#{index_row+1})")
-        span_selected =  $(row_selected).find("span")[index_key]
-        $(span_selected).text(key.char)
-        $(span_selected).parent('*[data-code]').attr('data-code', key.code)
-
+        setKey(index_row, index_key, key.char, key.code)
       )
-      )
+    )
+    if patch_qwertz?
+      setKey(0, 5, 'z', 90)
+      setKey(2, 0, 'y', 89)
+      setKey(1, 9, 'ö', 192)
 
 init = ->
   level = 'Normal'
@@ -83,9 +93,18 @@ $ ->
     $('.k').addClass 'qwerty'
     $(this).closest('.modal').remove()
 
+  $('.js-qwertz').on 'click', (e) ->
+    e.preventDefault()
+    initJson(2)
+    $('.k').addClass 'qwertz'
+    $(this).closest('.modal').remove()
+
   $(document).keydown (e) ->
     e.preventDefault()
     code = e.keyCode or e.which
+    # my firefox (linux) returns code 0 for oe
+    if code == 0 && e.key == 'ö'
+      code = 192
     key = $('[data-code=' + code + ']')
 
     if key.data('level')
@@ -135,6 +154,43 @@ $ ->
           when 76
             ion.sound.play 'WorkIs1'
           when 186
+            ion.sound.play 'Over1'
+      else if k.hasClass 'qwertz'
+        switch code
+          when 81
+            ion.sound.play 'WorkIt1'
+          when 87
+            ion.sound.play 'MakeIt1'
+          when 69
+            ion.sound.play 'DoIt1'
+          when 82
+            ion.sound.play 'MakesUs1'
+
+          when 65
+            ion.sound.play 'Harder1'
+          when 83
+            ion.sound.play 'Better1'
+          when 68
+            ion.sound.play 'Faster1'
+          when 70
+            ion.sound.play 'Stronger1'
+
+          when 85
+            ion.sound.play 'MoreThan1'
+          when 73
+            ion.sound.play 'Hour1'
+          when 79
+            ion.sound.play 'Our1'
+          when 80
+            ion.sound.play 'Never1'
+
+          when 74
+            ion.sound.play 'Ever1'
+          when 75
+            ion.sound.play 'After1'
+          when 76
+            ion.sound.play 'WorkIs1'
+          when 192
             ion.sound.play 'Over1'
       else
         switch code
@@ -212,6 +268,43 @@ $ ->
             ion.sound.play 'WorkIs2'
           when 186
             ion.sound.play 'Over2'
+      else if k.hasClass 'qwertz'
+        switch code
+          when 81
+            ion.sound.play 'WorkIt2'
+          when 87
+            ion.sound.play 'MakeIt2'
+          when 69
+            ion.sound.play 'DoIt2'
+          when 82
+            ion.sound.play 'MakesUs2'
+
+          when 65
+            ion.sound.play 'Harder2'
+          when 83
+            ion.sound.play 'Better2'
+          when 68
+            ion.sound.play 'Faster2'
+          when 70
+            ion.sound.play 'Stronger2'
+
+          when 85
+            ion.sound.play 'MoreThan2'
+          when 73
+            ion.sound.play 'Hour2'
+          when 79
+            ion.sound.play 'Our2'
+          when 80
+            ion.sound.play 'Never2'
+
+          when 74
+            ion.sound.play 'Ever2'
+          when 75
+            ion.sound.play 'After2'
+          when 76
+            ion.sound.play 'WorkIs2'
+          when 192
+            ion.sound.play 'Over2'
       else
         switch code
           when 65
@@ -270,6 +363,25 @@ $ ->
             ion.sound.play 'WorkIs3'
           when 186
             ion.sound.play 'Over3'
+      else if k.hasClass 'qwertz'
+        switch code
+          when 85
+            ion.sound.play 'MoreThan3'
+          when 73
+            ion.sound.play 'Hour3'
+          when 79
+            ion.sound.play 'Our3'
+          when 80
+            ion.sound.play 'Never3'
+
+          when 74
+            ion.sound.play 'Ever3'
+          when 75
+            ion.sound.play 'After3'
+          when 76
+            ion.sound.play 'WorkIs3'
+          when 192
+            ion.sound.play 'Over3'
       else
         switch code
           when 85
@@ -294,6 +406,9 @@ $ ->
   $(document).keyup (e) ->
     e.preventDefault()
     code = e.keyCode or e.which
+    # my firefox (linux) returns code 0 for oe
+    if code == 0 && e.key == 'ö'
+      code = 192
     key = $('[data-code=' + code + ']')
 
     if !key.data('level')
