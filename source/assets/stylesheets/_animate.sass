@@ -1,0 +1,17 @@
+.animated
+  animation-duration: 1s
+  animation-fill-mode: both
+  &.infinite
+    animation-iteration-count: infinite
+  &.hinge
+    animation-duration: 2s
+
+@keyframes fadeOutUp
+  0%
+    opacity: 1
+  100%
+    opacity: 0
+    transform: translate3d(0, -100%, 0)
+
+.fadeOutUp
+  animation-name: fadeOutUp

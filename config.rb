@@ -8,6 +8,9 @@ end
 
 require 'slim'
 
+activate :autoprefixer,
+    browsers: ['last 10 versions', 'ie 8', 'ie 9']
+
 activate :livereload
 activate :directory_indexes
 
@@ -27,7 +30,7 @@ end
 configure :build do
 
   activate :autoprefixer,
-    browsers: ['last 2 versions', 'ie 8', 'ie 9']
+    browsers: ['last 10 versions', 'ie 8', 'ie 9']
 
   activate :minify_html
   activate :minify_css
