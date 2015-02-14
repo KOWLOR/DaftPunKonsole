@@ -1,28 +1,54 @@
-setKey = (index_row, index_key, key_char, key_code) ->
-  row_selected =  $(".r:nth-child(#{index_row+1})")
-  span_selected =  $(row_selected).find("span")[index_key]
-  $(span_selected).text(key_char)
-  $(span_selected).parent('*[data-code]').attr('data-code', key_code)
+# letter to keycode mappings, in keyboard-like layout
+keyboard_qwerty = [
+  [ ["q", 81], ["w", 87], ["e", 69], ["r", 82], ["t", 84], ["y", 89], ["u", 85], ["i", 73], ["o", 79], ["p", 80] ],
+  [ ["a", 65], ["s", 83], ["d", 68], ["f", 70], ["g", 71], ["h", 72], ["j", 74], ["k", 75], ["l", 76], [";", 186] ],
+  [ ["z", 90], ["x", 88], ["c", 67], ["v", 86], ["b", 66], ["n", 78], ["m", 77], [",", 188] ],
+  [ ["", 32] ]
+]
 
-initJson = (index_type) ->
-  # HACK: monkey-patch the qwerty keyboard with x,y,oe
-  if index_type == 2
-    patch_qwertz = true
-    index_type = 1
-  $.ajax(
-    url: 'http://s.cdpn.io/190177/keyboard_.json'
-    type: 'get'
-    dataType: 'json')
-  .done (data) ->
-    _.each(data.keyboard.type[index_type].row, (row, index_row) ->
-      _.each(row.key, (key, index_key) ->
-        setKey(index_row, index_key, key.char, key.code)
-      )
+keyboard_qwertz = [
+  [ ["q", 81], ["w", 87], ["e", 69], ["r", 82], ["t", 84], ["z", 90], ["u", 85], ["i", 73], ["o", 79], ["p", 80] ],
+  [ ["a", 65], ["s", 83], ["d", 68], ["f", 70], ["g", 71], ["h", 72], ["j", 74], ["k", 75], ["l", 76], ["ö", 192] ],
+  [ ["y", 89], ["x", 88], ["c", 67], ["v", 86], ["b", 66], ["n", 78], ["m", 77], [",", 188] ],
+  [ ["", 32] ]
+]
+
+keyboard_azerty = [
+  [ ["a", 65], ["z", 90], ["e", 69], ["r", 82], ["t", 84], ["y", 89], ["u", 85], ["i", 73], ["o", 79], ["p", 80] ],
+  [ ["q", 81], ["s", 83], ["d", 68], ["f", 70], ["g", 71], ["h", 72], ["j", 74], ["k", 75], ["l", 76], ["m", 77] ],
+  [ ["w", 87], ["x", 88], ["c", 67], ["v", 86], ["b", 66], ["n", 78], [",", 188], [";", 186] ],
+  [ ["", 32] ]
+]
+
+# sounds are always on the same row and key index
+sound_index = [
+  [0, 0, 'WorkIt'],   [0, 1, 'MakeIt'], [0, 2, 'DoIt'],   [0, 3, 'MakesUs'],
+  [0, 6, 'MoreThan'], [0, 7, 'Hour'],   [0, 8, 'Our'],    [0, 9, 'Never'],
+  [1, 0, 'Harder'],   [1, 1, 'Better'], [1, 2, 'Faster'], [1, 3, 'Stronger'],
+  [1, 6, 'Ever'],     [1, 7, 'After'],  [1, 8, 'WorkIs'], [1, 9, 'Over']
+]
+
+sound_keys = {}
+
+initJson = (keyboard) ->
+  _.each(keyboard, (row, index_row) ->
+    _.each(row, ([key_char, key_code], index_key) ->
+      row_selected =  $(".r:nth-child(#{index_row+1})")
+      span_selected =  $(row_selected).find("span")[index_key]
+      $(span_selected).text(key_char)
+      $(span_selected).parent('*[data-code]').attr('data-code', key_code)
     )
-    if patch_qwertz?
-      setKey(0, 5, 'z', 90)
-      setKey(2, 0, 'y', 89)
-      setKey(1, 9, 'ö', 192)
+  )
+  _.each(sound_index, ([row, key, sound]) ->
+    key_code = keyboard[row][key][1]
+    sound_keys[key_code] = sound
+  )
+
+getKeyCode = (event) ->
+  code = event.keyCode or event.which
+  # firefox returns code 0 for ö
+  code = 192 if code == 0 and e.key == 'ö'
+  return code
 
 init = ->
   level = 'Normal'
@@ -83,19 +109,19 @@ $ ->
 
   $('.js-azerty').on 'click', (e) ->
     e.preventDefault()
-    initJson(0)
+    initJson(keyboard_azerty)
     $('.k').addClass 'azerty'
     $(this).closest('.modal').remove()
 
   $('.js-qwerty').on 'click', (e) ->
     e.preventDefault()
-    initJson(1)
+    initJson(keyboard_qwerty)
     $('.k').addClass 'qwerty'
     $(this).closest('.modal').remove()
 
   $('.js-qwertz').on 'click', (e) ->
     e.preventDefault()
-    initJson(2)
+    initJson(keyboard_qwertz)
     $('.k').addClass 'qwertz'
     $(this).closest('.modal').remove()
 
@@ -117,290 +143,17 @@ $ ->
       key.addClass('is-active')
       $('#js-lyrics').html('<span class="animated"/>').find('span').addClass('fadeOutUp').html(key.data('lyric'))
 
-    if $('.level').find('i.is-active').data('level') == 'Normal'
-      if k.hasClass 'qwerty'
-        switch code
-          when 81
-            ion.sound.play 'WorkIt1'
-          when 87
-            ion.sound.play 'MakeIt1'
-          when 69
-            ion.sound.play 'DoIt1'
-          when 82
-            ion.sound.play 'MakesUs1'
+    switch $('.level').find('i.is-active').data('level')
+      when 'Normal'
+        level_num = 1
+      when 'High'
+        level_num = 2
+      when 'Low'
+        level_num = 3
 
-          when 65
-            ion.sound.play 'Harder1'
-          when 83
-            ion.sound.play 'Better1'
-          when 68
-            ion.sound.play 'Faster1'
-          when 70
-            ion.sound.play 'Stronger1'
-
-          when 85
-            ion.sound.play 'MoreThan1'
-          when 73
-            ion.sound.play 'Hour1'
-          when 79
-            ion.sound.play 'Our1'
-          when 80
-            ion.sound.play 'Never1'
-
-          when 74
-            ion.sound.play 'Ever1'
-          when 75
-            ion.sound.play 'After1'
-          when 76
-            ion.sound.play 'WorkIs1'
-          when 186
-            ion.sound.play 'Over1'
-      else if k.hasClass 'qwertz'
-        switch code
-          when 81
-            ion.sound.play 'WorkIt1'
-          when 87
-            ion.sound.play 'MakeIt1'
-          when 69
-            ion.sound.play 'DoIt1'
-          when 82
-            ion.sound.play 'MakesUs1'
-
-          when 65
-            ion.sound.play 'Harder1'
-          when 83
-            ion.sound.play 'Better1'
-          when 68
-            ion.sound.play 'Faster1'
-          when 70
-            ion.sound.play 'Stronger1'
-
-          when 85
-            ion.sound.play 'MoreThan1'
-          when 73
-            ion.sound.play 'Hour1'
-          when 79
-            ion.sound.play 'Our1'
-          when 80
-            ion.sound.play 'Never1'
-
-          when 74
-            ion.sound.play 'Ever1'
-          when 75
-            ion.sound.play 'After1'
-          when 76
-            ion.sound.play 'WorkIs1'
-          when 192
-            ion.sound.play 'Over1'
-      else
-        switch code
-          when 65
-            ion.sound.play 'WorkIt1'
-          when 90
-            ion.sound.play 'MakeIt1'
-          when 69
-            ion.sound.play 'DoIt1'
-          when 82
-            ion.sound.play 'MakesUs1'
-
-          when 81
-            ion.sound.play 'Harder1'
-          when 83
-            ion.sound.play 'Better1'
-          when 68
-            ion.sound.play 'Faster1'
-          when 70
-            ion.sound.play 'Stronger1'
-
-          when 85
-            ion.sound.play 'MoreThan1'
-          when 73
-            ion.sound.play 'Hour1'
-          when 79
-            ion.sound.play 'Our1'
-          when 80
-            ion.sound.play 'Never1'
-
-          when 74
-            ion.sound.play 'Ever1'
-          when 75
-            ion.sound.play 'After1'
-          when 76
-            ion.sound.play 'WorkIs1'
-          when 77
-            ion.sound.play 'Over1'
-
-    else if $('.level').find('i.is-active').data('level') == 'High'
-      if k.hasClass 'qwerty'
-        switch code
-          when 81
-            ion.sound.play 'WorkIt2'
-          when 87
-            ion.sound.play 'MakeIt2'
-          when 69
-            ion.sound.play 'DoIt2'
-          when 82
-            ion.sound.play 'MakesUs2'
-
-          when 65
-            ion.sound.play 'Harder2'
-          when 83
-            ion.sound.play 'Better2'
-          when 68
-            ion.sound.play 'Faster2'
-          when 70
-            ion.sound.play 'Stronger2'
-
-          when 85
-            ion.sound.play 'MoreThan2'
-          when 73
-            ion.sound.play 'Hour2'
-          when 79
-            ion.sound.play 'Our2'
-          when 80
-            ion.sound.play 'Never2'
-
-          when 74
-            ion.sound.play 'Ever2'
-          when 75
-            ion.sound.play 'After2'
-          when 76
-            ion.sound.play 'WorkIs2'
-          when 186
-            ion.sound.play 'Over2'
-      else if k.hasClass 'qwertz'
-        switch code
-          when 81
-            ion.sound.play 'WorkIt2'
-          when 87
-            ion.sound.play 'MakeIt2'
-          when 69
-            ion.sound.play 'DoIt2'
-          when 82
-            ion.sound.play 'MakesUs2'
-
-          when 65
-            ion.sound.play 'Harder2'
-          when 83
-            ion.sound.play 'Better2'
-          when 68
-            ion.sound.play 'Faster2'
-          when 70
-            ion.sound.play 'Stronger2'
-
-          when 85
-            ion.sound.play 'MoreThan2'
-          when 73
-            ion.sound.play 'Hour2'
-          when 79
-            ion.sound.play 'Our2'
-          when 80
-            ion.sound.play 'Never2'
-
-          when 74
-            ion.sound.play 'Ever2'
-          when 75
-            ion.sound.play 'After2'
-          when 76
-            ion.sound.play 'WorkIs2'
-          when 192
-            ion.sound.play 'Over2'
-      else
-        switch code
-          when 65
-            ion.sound.play 'WorkIt2'
-          when 90
-            ion.sound.play 'MakeIt2'
-          when 69
-            ion.sound.play 'DoIt2'
-          when 82
-            ion.sound.play 'MakesUs2'
-
-          when 81
-            ion.sound.play 'Harder2'
-          when 83
-            ion.sound.play 'Better2'
-          when 68
-            ion.sound.play 'Faster2'
-          when 70
-            ion.sound.play 'Stronger2'
-
-          when 85
-            ion.sound.play 'MoreThan2'
-          when 73
-            ion.sound.play 'Hour2'
-          when 79
-            ion.sound.play 'Our2'
-          when 80
-            ion.sound.play 'Never2'
-
-          when 74
-            ion.sound.play 'Ever2'
-          when 75
-            ion.sound.play 'After2'
-          when 76
-            ion.sound.play 'WorkIs2'
-          when 77
-            ion.sound.play 'Over2'
-
-    else if $('.level').find('i.is-active').data('level') == 'Low'
-      if k.hasClass 'qwerty'
-        switch code
-          when 85
-            ion.sound.play 'MoreThan3'
-          when 73
-            ion.sound.play 'Hour3'
-          when 79
-            ion.sound.play 'Our3'
-          when 80
-            ion.sound.play 'Never3'
-
-          when 74
-            ion.sound.play 'Ever3'
-          when 75
-            ion.sound.play 'After3'
-          when 76
-            ion.sound.play 'WorkIs3'
-          when 186
-            ion.sound.play 'Over3'
-      else if k.hasClass 'qwertz'
-        switch code
-          when 85
-            ion.sound.play 'MoreThan3'
-          when 73
-            ion.sound.play 'Hour3'
-          when 79
-            ion.sound.play 'Our3'
-          when 80
-            ion.sound.play 'Never3'
-
-          when 74
-            ion.sound.play 'Ever3'
-          when 75
-            ion.sound.play 'After3'
-          when 76
-            ion.sound.play 'WorkIs3'
-          when 192
-            ion.sound.play 'Over3'
-      else
-        switch code
-          when 85
-            ion.sound.play 'MoreThan3'
-          when 73
-            ion.sound.play 'Hour3'
-          when 79
-            ion.sound.play 'Our3'
-          when 80
-            ion.sound.play 'Never3'
-
-          when 74
-            ion.sound.play 'Ever3'
-          when 75
-            ion.sound.play 'After3'
-          when 76
-            ion.sound.play 'WorkIs3'
-          when 77
-            ion.sound.play 'Over3'
+    sound_name = sound_keys[code]
+    if sound_name
+      ion.sound.play sound_name + level_num
 
 
   $(document).keyup (e) ->
