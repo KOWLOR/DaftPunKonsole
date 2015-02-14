@@ -134,7 +134,7 @@ $ ->
             ion.sound.play 'After1'
           when 76
             ion.sound.play 'WorkIs1'
-          when 186
+          when 186, 59
             ion.sound.play 'Over1'
       else
         switch code
@@ -210,7 +210,7 @@ $ ->
             ion.sound.play 'After2'
           when 76
             ion.sound.play 'WorkIs2'
-          when 186
+          when 186, 59
             ion.sound.play 'Over2'
       else
         switch code
@@ -268,7 +268,7 @@ $ ->
             ion.sound.play 'After3'
           when 76
             ion.sound.play 'WorkIs3'
-          when 186
+          when 186, 59
             ion.sound.play 'Over3'
       else
         switch code
