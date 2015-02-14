@@ -103,7 +103,7 @@ $ ->
     e.preventDefault()
     code = e.keyCode or e.which
     # my firefox (linux) returns code 0 for oe
-    if code == 0 && e.key == 'ö'
+    if code == 0 and e.key == 'ö'
       code = 192
     key = $('[data-code=' + code + ']')
 
@@ -407,7 +407,7 @@ $ ->
     e.preventDefault()
     code = e.keyCode or e.which
     # my firefox (linux) returns code 0 for oe
-    if code == 0 && e.key == 'ö'
+    if code == 0 and e.key == 'ö'
       code = 192
     key = $('[data-code=' + code + ']')
 
