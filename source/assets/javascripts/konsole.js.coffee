@@ -23,9 +23,9 @@ keyboard_azerty = [
 # sounds are always on the same row and key index
 sound_index = [
   [0, 0, 'WorkIt'],   [0, 1, 'MakeIt'], [0, 2, 'DoIt'],   [0, 3, 'MakesUs'],
-  [0, 6, 'MoreThan'], [0, 7, 'Hour'],   [0, 8, 'Our'],    [0, 9, 'Never'],
+  [0, 5, 'MoreThan'], [0, 6, 'Hour'],   [0, 7, 'Our'],    [0, 8, 'Never'],
   [1, 0, 'Harder'],   [1, 1, 'Better'], [1, 2, 'Faster'], [1, 3, 'Stronger'],
-  [1, 6, 'Ever'],     [1, 7, 'After'],  [1, 8, 'WorkIs'], [1, 9, 'Over']
+  [1, 5, 'Ever'],     [1, 6, 'After'],  [1, 7, 'WorkIs'], [1, 8, 'Over']
 ]
 
 sound_keys = {}
