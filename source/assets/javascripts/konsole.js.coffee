@@ -113,6 +113,14 @@ ion.sound
     {name:'After4'}
     {name:'WorkIs4'}
     {name:'Over4'}
+    {name:'MoreThan5'}
+    {name:'Hour5'}
+    {name:'Our5'}
+    {name:'Never5'}
+    {name:'Ever5'}
+    {name:'After5'}
+    {name:'WorkIs5'}
+    {name:'Over5'}
 
   ]
   path: 'http://s.cdpn.io/190177/'
@@ -167,6 +175,8 @@ $ ->
         level_num = 3
       when 'Pitch-2'
         level_num = 4
+      when 'High'
+        level_num = 5
 
     sound_name = sound_keys[code]
     if sound_name

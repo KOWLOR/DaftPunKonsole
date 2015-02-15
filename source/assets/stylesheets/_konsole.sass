@@ -36,7 +36,7 @@ body
   color: $neutral-color
   -webkit-font-smoothing: subpixel-antialiased
   text-rendering: optimizeLegibility
-  background-size: 95%
+  background-size: 70%
 
 
 a
@@ -69,6 +69,9 @@ a
     .Low &
       color: $gold-helmet
       text-shadow: rem-calc(0 0 10) rgba($gold-helmet, .2)
+    .High &
+      color: $grape
+      text-shadow: rem-calc(0 0 10) rgba($grape, .2)
 
 .wk
   display: flex
@@ -138,6 +141,19 @@ a
             +keycolor($gold-helmet)
           &:active, &.is-active
             +keycolor($gold-helmet, true)
+      .High &
+        i:nth-child(-n+4)
+          color: $bg-color-light
+          &:hover
+            +keycolor($bg-color-lightened)
+          &:active, &.is-active
+            +keycolor($bg-color-lightened, true)
+        i:nth-last-child(-n+5)
+          color: lighten($tint, 25%)
+          &:hover
+            +keycolor($grape)
+          &:active, &.is-active
+            +keycolor($grape, true)
     &:nth-child(2)
       +translateX(2.5%)
     &:nth-child(3)
@@ -163,6 +179,11 @@ a
           b
             background: $gold-helmet
           +keycolor($gold-helmet, true)
+      i:nth-last-child(4)
+        .High &
+          b
+            background: $grape
+          +keycolor($grape, true)
       i
         flex-direction: column-reverse
         b
@@ -331,6 +352,12 @@ a
           &:before
             background: $gold-helmet
             box-shadow: rem-calc(0 0 3) rgba($gold-helmet, .8)
+        .High &
+          color: $grape
+          text-shadow: rem-calc(0 0 2) rgba($grape, .8)
+          &:before
+            background: $grape
+            box-shadow: rem-calc(0 0 3) rgba($grape, .8)
   .jp-progress
     height: rem-calc(49)
     .jp-seek-bar
