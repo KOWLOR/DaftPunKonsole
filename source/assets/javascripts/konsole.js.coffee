@@ -86,6 +86,9 @@ $ ->
   $(document).keydown (e) ->
     e.preventDefault()
     code = e.keyCode or e.which
+
+    if code == 59 then code = 186
+
     key = $('[data-code=' + code + ']')
 
     if key.data('level')
@@ -294,6 +297,9 @@ $ ->
   $(document).keyup (e) ->
     e.preventDefault()
     code = e.keyCode or e.which
+    
+    if code == 59 then code = 186
+
     key = $('[data-code=' + code + ']')
 
     if !key.data('level')
