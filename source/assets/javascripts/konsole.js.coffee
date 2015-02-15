@@ -57,7 +57,6 @@ init = ->
 
 ion.sound
   sounds: [
-    {name:'beat'}
     {name:'WorkIt1'}
     {name:'MakeIt1'}
     {name:'DoIt1'}
@@ -98,6 +97,22 @@ ion.sound
     {name:'After3'}
     {name:'WorkIs3'}
     {name:'Over3'}
+    {name:'WorkIt4'}
+    {name:'MakeIt4'}
+    {name:'DoIt4'}
+    {name:'MakesUs4'}
+    {name:'Harder4'}
+    {name:'Better4'}
+    {name:'Faster4'}
+    {name:'Stronger4'}
+    {name:'MoreThan4'}
+    {name:'Hour4'}
+    {name:'Our4'}
+    {name:'Never4'}
+    {name:'Ever4'}
+    {name:'After4'}
+    {name:'WorkIs4'}
+    {name:'Over4'}
 
   ]
   path: 'http://s.cdpn.io/190177/'
@@ -146,10 +161,12 @@ $ ->
     switch $('.level').find('i.is-active').data('level')
       when 'Normal'
         level_num = 1
-      when 'High'
+      when 'Pitch-1'
         level_num = 2
       when 'Low'
         level_num = 3
+      when 'Pitch-2'
+        level_num = 4
 
     sound_name = sound_keys[code]
     if sound_name

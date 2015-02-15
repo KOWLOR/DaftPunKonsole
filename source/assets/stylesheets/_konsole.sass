@@ -60,9 +60,12 @@ a
     .Normal &
       color: $extra
       text-shadow: rem-calc(0 0 10) rgba($extra, .2)
-    .High &
+    .Pitch-1 &
       color: $love
       text-shadow: rem-calc(0 0 10) rgba($love, .2)
+    .Pitch-2 &
+      color: $sky
+      text-shadow: rem-calc(0 0 10) rgba($sky, .2)
     .Low &
       color: $gold-helmet
       text-shadow: rem-calc(0 0 10) rgba($gold-helmet, .2)
@@ -108,13 +111,20 @@ a
             +keycolor($extra)
           &:active, &.is-active
             +keycolor($extra, true)
-      .High &
+      .Pitch-1 &
         i:nth-last-child(-n+5), i:nth-child(-n+4)
           color: lighten($tint, 25%)
           &:hover
             +keycolor($love)
           &:active, &.is-active
             +keycolor($love, true)
+      .Pitch-2 &
+        i:nth-last-child(-n+5), i:nth-child(-n+4)
+          color: lighten($tint, 25%)
+          &:hover
+            +keycolor($sky)
+          &:active, &.is-active
+            +keycolor($sky, true)
       .Low &
         i:nth-child(-n+4)
           color: $bg-color-light
@@ -139,10 +149,15 @@ a
             background: $extra
           +keycolor($extra, true)
       i:nth-child(2)
-        .High &
+        .Pitch-1 &
           b
             background: $love
           +keycolor($love, true)
+      i:nth-child(3)
+        .Pitch-2 &
+          b
+            background: $sky
+          +keycolor($sky, true)
       i:nth-last-child(3)
         .Low &
           b
@@ -298,12 +313,18 @@ a
         &:before
           background: $extra
           box-shadow: rem-calc(0 0 3) rgba($extra, .8)
-        .High &
+        .Pitch-1 &
           color: $love
           text-shadow: rem-calc(0 0 2) rgba($love, .8)
           &:before
             background: $love
             box-shadow: rem-calc(0 0 3) rgba($love, .8)
+        .Pitch-2 &
+          color: $sky
+          text-shadow: rem-calc(0 0 2) rgba($sky, .8)
+          &:before
+            background: $sky
+            box-shadow: rem-calc(0 0 3) rgba($sky, .8)
         .Low &
           color: $gold-helmet
           text-shadow: rem-calc(0 0 2) rgba($gold-helmet, .8)
