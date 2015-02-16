@@ -85,73 +85,12 @@ init = ->
   $('.level').find('i[data-level=' + level + ']').addClass 'is-active'
 
 ion.sound
-  sounds: [
-    {name:'WorkIt1'}
-    {name:'MakeIt1'}
-    {name:'DoIt1'}
-    {name:'MakesUs1'}
-    {name:'Harder1'}
-    {name:'Better1'}
-    {name:'Faster1'}
-    {name:'Stronger1'}
-    {name:'MoreThan1'}
-    {name:'Hour1'}
-    {name:'Our1'}
-    {name:'Never1'}
-    {name:'Ever1'}
-    {name:'After1'}
-    {name:'WorkIs1'}
-    {name:'Over1'}
-    {name:'WorkIt2'}
-    {name:'MakeIt2'}
-    {name:'DoIt2'}
-    {name:'MakesUs2'}
-    {name:'Harder2'}
-    {name:'Better2'}
-    {name:'Faster2'}
-    {name:'Stronger2'}
-    {name:'MoreThan2'}
-    {name:'Hour2'}
-    {name:'Our2'}
-    {name:'Never2'}
-    {name:'Ever2'}
-    {name:'After2'}
-    {name:'WorkIs2'}
-    {name:'Over2'}
-    {name:'MoreThan3'}
-    {name:'Hour3'}
-    {name:'Our3'}
-    {name:'Never3'}
-    {name:'Ever3'}
-    {name:'After3'}
-    {name:'WorkIs3'}
-    {name:'Over3'}
-    {name:'WorkIt4'}
-    {name:'MakeIt4'}
-    {name:'DoIt4'}
-    {name:'MakesUs4'}
-    {name:'Harder4'}
-    {name:'Better4'}
-    {name:'Faster4'}
-    {name:'Stronger4'}
-    {name:'MoreThan4'}
-    {name:'Hour4'}
-    {name:'Our4'}
-    {name:'Never4'}
-    {name:'Ever4'}
-    {name:'After4'}
-    {name:'WorkIs4'}
-    {name:'Over4'}
-    {name:'MoreThan5'}
-    {name:'Hour5'}
-    {name:'Our5'}
-    {name:'Never5'}
-    {name:'Ever5'}
-    {name:'After5'}
-    {name:'WorkIs5'}
-    {name:'Over5'}
-
-  ]
+  sounds: do ->
+    sounds = []
+    for i in [1..5]
+      for s in sound_index
+        sounds.push {name: (s[2] + i)}
+    return sounds
   path: 'http://s.cdpn.io/190177/'
   preload: true
 
