@@ -20,6 +20,24 @@ keyboard_azerty = [
   [ ["", 32] ]
 ]
 
+keyboard_bepo = [] 
+
+if /Chrome/.test(navigator.userAgent)
+  keyboard_bepo = [
+    [ ["b", 66], ["é", 87], ["p", 80], ["o", 79], ["è", 84], ["v", 86], ["d", 68], ["l", 76], ["j", 74] ],
+    [ ["a", 65], ["u", 85], ["i", 73], ["e", 69], [",", 44], ["t", 84], ["s", 83], ["r", 82], ["n", 78] ],
+    [ ["à", 90], ["y", 89], ["x", 88], [".", 46], ["k", 75], ["q", 81], ["g", 71] ],
+    [ ["", 32] ]
+  ]
+
+if /Firefox/.test(navigator.userAgent)
+  keyboard_bepo= [
+    [ ["b", 66], ["é", 233], ["p", 80], ["o", 79], ["è", 232], ["v", 86], ["d", 68], ["l", 76], ["j", 74] ],
+    [ ["a", 65], ["u", 85], ["i", 73], ["e", 69], [",", 44], ["t", 84], ["s", 83], ["r", 82], ["n", 78] ],
+    [ ["à", 224], ["y", 89], ["x", 88], [".", 46], ["k", 75], ["q", 81], ["g", 71] ],
+    [ ["", 32] ]
+  ]
+
 # sounds are always on the same row and key index
 sound_index = [
   [0, 0, 'WorkIt'],   [0, 1, 'MakeIt'], [0, 2, 'DoIt'],   [0, 3, 'MakesUs'],
@@ -47,7 +65,13 @@ initJson = (keyboard) ->
 getKeyCode = (event) ->
   code = event.keyCode or event.which
   # firefox returns code 0 for ö
-  code = 192 if code == 0 and e.key == 'ö'
+  if code == 0
+    switch e.key
+      when 'ö' then code = 192
+      when 'é' then code = 233
+      when 'è' then code = 232
+      when 'à' then code = 224
+
   return code
 
 init = ->
@@ -148,12 +172,23 @@ $ ->
     $('.k').addClass 'qwertz'
     $(this).closest('.modal').remove()
 
+  $('.js-bepo').on 'click', (e) ->
+    e.preventDefault()
+    initJson(keyboard_bepo)
+    $('.k').addClass 'bepo'
+    $(this).closest('.modal').remove()
+
   $(document).keydown (e) ->
     e.preventDefault()
     code = e.keyCode or e.which
     # my firefox (linux) returns code 0 for oe
-    if code == 0 and e.key == 'ö'
-      code = 192
+    if code == 0 
+      switch e.key 
+        when 'ö' then code = 192
+        when 'é' then code = 233
+        when 'è' then code = 232
+        when 'à' then code = 224
+     
     key = $('[data-code=' + code + ']')
 
     if key.data('level')
@@ -187,8 +222,13 @@ $ ->
     e.preventDefault()
     code = e.keyCode or e.which
     # my firefox (linux) returns code 0 for oe
-    if code == 0 and e.key == 'ö'
-      code = 192
+    if code == 0 
+      switch e.key 
+        when 'ö' then code = 192
+        when 'é' then code = 233
+        when 'è' then code = 232
+        when 'à' then code = 224
+
     key = $('[data-code=' + code + ']')
 
     if !key.data('level')
