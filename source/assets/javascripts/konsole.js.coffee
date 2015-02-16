@@ -50,6 +50,35 @@ getKeyCode = (event) ->
   code = 192 if code == 0 and e.key == 'ö'
   return code
 
+processKeyDown = (key, isMouse) ->
+  if key.data('level')
+    curClass = key.data('level')
+    key.addClass('is-active')
+    key.closest('.level').find('.is-active').not(key).removeClass('is-active')
+    $('body').removeClass().addClass(curClass)
+  else
+    $('#js-lyrics').html('<span class="animated"/>').find('span').addClass('fadeOutUp').html(key.data('lyric'))
+    if !isMouse
+      key.addClass('is-active')
+
+  switch $('.level').find('i.is-active').data('level')
+    when 'Normal'
+      level_num = 1
+    when 'Pitch-1'
+      level_num = 2
+    when 'Low'
+      level_num = 3
+    when 'Pitch-2'
+      level_num = 4
+    when 'High'
+      level_num = 5
+
+  code = key.data('code')
+  sound_name = sound_keys[code]
+  if sound_name
+    ion.sound.play sound_name + level_num
+
+
 init = ->
   level = 'Normal'
   $('body').addClass 'Normal'
@@ -150,49 +179,21 @@ $ ->
 
   $(document).keydown (e) ->
     e.preventDefault()
-    code = e.keyCode or e.which
-    # my firefox (linux) returns code 0 for oe
-    if code == 0 and e.key == 'ö'
-      code = 192
+    code = getKeyCode e
     key = $('[data-code=' + code + ']')
-
-    if key.data('level')
-      curClass = key.data('level')
-      key.addClass('is-active')
-      key.closest('.level').find('.is-active').not(key).removeClass('is-active')
-      $('body').removeClass().addClass(curClass)
-
-    else
-      key.addClass('is-active')
-      $('#js-lyrics').html('<span class="animated"/>').find('span').addClass('fadeOutUp').html(key.data('lyric'))
-
-    switch $('.level').find('i.is-active').data('level')
-      when 'Normal'
-        level_num = 1
-      when 'Pitch-1'
-        level_num = 2
-      when 'Low'
-        level_num = 3
-      when 'Pitch-2'
-        level_num = 4
-      when 'High'
-        level_num = 5
-
-    sound_name = sound_keys[code]
-    if sound_name
-      ion.sound.play sound_name + level_num
-
+    if key.length
+      processKeyDown key, false
 
   $(document).keyup (e) ->
     e.preventDefault()
-    code = e.keyCode or e.which
-    # my firefox (linux) returns code 0 for oe
-    if code == 0 and e.key == 'ö'
-      code = 192
+    code = getKeyCode e
     key = $('[data-code=' + code + ']')
-
     if !key.data('level')
       key.removeClass('is-active')
+
+  $('[data-code]').mousedown (e) ->
+    e.preventDefault()
+    processKeyDown $(this), true
 
   $('#js-daft_1').jPlayer
     ready: (event) ->
