@@ -178,16 +178,17 @@ $ ->
     $(this).closest('.modal').remove()
 
   $(document).keydown (e) ->
-    e.preventDefault()
     code = getKeyCode e
     key = $('[data-code=' + code + ']')
     if key.length
+      e.preventDefault()
       processKeyDown key, false
 
   $(document).keyup (e) ->
-    e.preventDefault()
     code = getKeyCode e
     key = $('[data-code=' + code + ']')
+    if key.length
+      e.preventDefault()
     if !key.data('level')
       key.removeClass('is-active')
 
