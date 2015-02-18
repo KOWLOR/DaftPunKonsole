@@ -50,79 +50,47 @@ getKeyCode = (event) ->
   code = 192 if code == 0 and e.key == 'ö'
   return code
 
+processKeyDown = (key, isMouse) ->
+  if key.data('level')
+    curClass = key.data('level')
+    key.addClass('is-active')
+    key.closest('.level').find('.is-active').not(key).removeClass('is-active')
+    $('body').removeClass().addClass(curClass)
+  else
+    $('#js-lyrics').html('<span class="animated"/>').find('span').addClass('fadeOutUp').html(key.data('lyric'))
+    if !isMouse
+      key.addClass('is-active')
+
+  switch $('.level').find('i.is-active').data('level')
+    when 'Normal'
+      level_num = 1
+    when 'Pitch-1'
+      level_num = 2
+    when 'Low'
+      level_num = 3
+    when 'Pitch-2'
+      level_num = 4
+    when 'High'
+      level_num = 5
+
+  code = key.data('code')
+  sound_name = sound_keys[code]
+  if sound_name
+    ion.sound.play sound_name + level_num
+
+
 init = ->
   level = 'Normal'
   $('body').addClass 'Normal'
   $('.level').find('i[data-level=' + level + ']').addClass 'is-active'
 
 ion.sound
-  sounds: [
-    {name:'WorkIt1'}
-    {name:'MakeIt1'}
-    {name:'DoIt1'}
-    {name:'MakesUs1'}
-    {name:'Harder1'}
-    {name:'Better1'}
-    {name:'Faster1'}
-    {name:'Stronger1'}
-    {name:'MoreThan1'}
-    {name:'Hour1'}
-    {name:'Our1'}
-    {name:'Never1'}
-    {name:'Ever1'}
-    {name:'After1'}
-    {name:'WorkIs1'}
-    {name:'Over1'}
-    {name:'WorkIt2'}
-    {name:'MakeIt2'}
-    {name:'DoIt2'}
-    {name:'MakesUs2'}
-    {name:'Harder2'}
-    {name:'Better2'}
-    {name:'Faster2'}
-    {name:'Stronger2'}
-    {name:'MoreThan2'}
-    {name:'Hour2'}
-    {name:'Our2'}
-    {name:'Never2'}
-    {name:'Ever2'}
-    {name:'After2'}
-    {name:'WorkIs2'}
-    {name:'Over2'}
-    {name:'MoreThan3'}
-    {name:'Hour3'}
-    {name:'Our3'}
-    {name:'Never3'}
-    {name:'Ever3'}
-    {name:'After3'}
-    {name:'WorkIs3'}
-    {name:'Over3'}
-    {name:'WorkIt4'}
-    {name:'MakeIt4'}
-    {name:'DoIt4'}
-    {name:'MakesUs4'}
-    {name:'Harder4'}
-    {name:'Better4'}
-    {name:'Faster4'}
-    {name:'Stronger4'}
-    {name:'MoreThan4'}
-    {name:'Hour4'}
-    {name:'Our4'}
-    {name:'Never4'}
-    {name:'Ever4'}
-    {name:'After4'}
-    {name:'WorkIs4'}
-    {name:'Over4'}
-    {name:'MoreThan5'}
-    {name:'Hour5'}
-    {name:'Our5'}
-    {name:'Never5'}
-    {name:'Ever5'}
-    {name:'After5'}
-    {name:'WorkIs5'}
-    {name:'Over5'}
-
-  ]
+  sounds: do ->
+    sounds = []
+    for i in [1..5]
+      for s in sound_index
+        sounds.push {name: (s[2] + i), preload: true}
+    return sounds
   path: 'http://s.cdpn.io/190177/'
   preload: true
 
@@ -149,50 +117,23 @@ $ ->
     $(this).closest('.modal').remove()
 
   $(document).keydown (e) ->
-    e.preventDefault()
-    code = e.keyCode or e.which
-    # my firefox (linux) returns code 0 for oe
-    if code == 0 and e.key == 'ö'
-      code = 192
+    code = getKeyCode e
     key = $('[data-code=' + code + ']')
-
-    if key.data('level')
-      curClass = key.data('level')
-      key.addClass('is-active')
-      key.closest('.level').find('.is-active').not(key).removeClass('is-active')
-      $('body').removeClass().addClass(curClass)
-
-    else
-      key.addClass('is-active')
-      $('#js-lyrics').html('<span class="animated"/>').find('span').addClass('fadeOutUp').html(key.data('lyric'))
-
-    switch $('.level').find('i.is-active').data('level')
-      when 'Normal'
-        level_num = 1
-      when 'Pitch-1'
-        level_num = 2
-      when 'Low'
-        level_num = 3
-      when 'Pitch-2'
-        level_num = 4
-      when 'High'
-        level_num = 5
-
-    sound_name = sound_keys[code]
-    if sound_name
-      ion.sound.play sound_name + level_num
-
+    if key.length
+      e.preventDefault()
+      processKeyDown key, false
 
   $(document).keyup (e) ->
-    e.preventDefault()
-    code = e.keyCode or e.which
-    # my firefox (linux) returns code 0 for oe
-    if code == 0 and e.key == 'ö'
-      code = 192
+    code = getKeyCode e
     key = $('[data-code=' + code + ']')
-
+    if key.length
+      e.preventDefault()
     if !key.data('level')
       key.removeClass('is-active')
+
+  $('[data-code]').mousedown (e) ->
+    e.preventDefault()
+    processKeyDown $(this), true
 
   $('#js-daft_1').jPlayer
     ready: (event) ->
@@ -226,3 +167,7 @@ $ ->
         key: 0
         fn: (f) ->
           f.volume f.options.volume - 0.1
+      loop:
+        key: 0
+        fn: (f) ->
+          f._loop !f.options.loop
