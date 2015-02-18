@@ -96,12 +96,14 @@ a
     &:nth-child(1), &:nth-child(2)
       i:nth-last-child(-n+5), i:nth-child(-n+4)
         color: lighten($tint, 25%)
+        cursor: pointer
         &:hover
           +keycolor($extra)
         &:active, &.is-active
           +keycolor($extra, true)
       i:last-child
         color: $bg-color-light !important
+        cursor: initial
         &:hover
           border-color: $tint !important
           color: $tint !important
@@ -163,26 +165,31 @@ a
       margin-left: 8.5%
       margin-right: 14%
       i:nth-child(1)
+        cursor: pointer
         .Normal &
           b
             background: $extra
           +keycolor($extra, true)
       i:nth-child(2)
+        cursor: pointer
         .Pitch-1 &
           b
             background: $love
           +keycolor($love, true)
       i:nth-child(3)
+        cursor: pointer
         .Pitch-2 &
           b
             background: $sky
           +keycolor($sky, true)
       i:nth-last-child(3)
+        cursor: pointer
         .Low &
           b
             background: $gold-helmet
           +keycolor($gold-helmet, true)
       i:nth-last-child(4)
+        cursor: pointer
         .High &
           b
             background: $grape
