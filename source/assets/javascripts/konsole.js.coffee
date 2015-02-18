@@ -89,7 +89,7 @@ ion.sound
     sounds = []
     for i in [1..5]
       for s in sound_index
-        sounds.push {name: (s[2] + i)}
+        sounds.push {name: (s[2] + i), preload: true}
     return sounds
   path: 'http://s.cdpn.io/190177/'
   preload: true
@@ -167,3 +167,7 @@ $ ->
         key: 0
         fn: (f) ->
           f.volume f.options.volume - 0.1
+      loop:
+        key: 0
+        fn: (f) ->
+          f._loop !f.options.loop
