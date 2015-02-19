@@ -1,22 +1,6 @@
 /*
- * #DaftPunKonsole
+ * Konsole
  * Malik Dellidj - @Dathink
- *
- * There are existing apps or flash to do this, but no web version so here it is.
- *
- * How to play :
- * You may notice that in the song all theses words are used
- * but sometimes in a different layout
- * e.g.
- * – Work it, make it, do it, makes us
- * – Harder, better, faster, stronger
- * –––
- * – Work it, harder, make it, better
- * – Do it, faster, makes us, stronger
- *
- * Check the lyrics ! and the different tones to recreate over half of the song !
- *
- * Many thanks to my work mates who helped me when I was stuck
  *
  * Nb : Hey IE fellaz, get a browser : www.google.com/chrome, it's free !
  */
@@ -38,7 +22,18 @@ body
   text-rendering: optimizeLegibility
   background-size: 70%
 
-
+.home
+  display: flex
+  align-items: center
+  justify-content: center
+  flex: 1
+  flex-direction: column
+  p
+    width: rem-calc(640)
+    color: $bg-color-lightened
+    text-align: center
+    margin: rem-calc(10)
+    font-size: rem-calc(14)
 a
   text-decoration: none
   color: $bg-color-light

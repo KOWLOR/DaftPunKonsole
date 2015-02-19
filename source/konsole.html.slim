@@ -1,0 +1,77 @@
+---
+title: Daftpunkonsole.com
+---
+
+- a = [['Work it'], ['Make it'], ['Do it'],['Makes us'],[''],['More than'],['Hour'],['Our'],['Never'],['']]
+- b = [['Harder'],['Better'],['Faster'],['Stronger'],[''],['Ever'],['After'],['Work is'],['Over'],['']]
+- c = [['Normal'],['Pitch-1'],['Pitch-2'],[''],['High'],['Low'],[''],['']]
+- d = [['','32', 'play']]
+
+.wk
+  #js-lyrics.lyrics.animated
+  .k
+    .r
+      - a.each do |k|
+        i data-code="" data-lyric=k[0]
+          span
+          - if k[0] != ''
+            b = k[0]
+    .r
+      - b.each do |k|
+        i data-code="" data-lyric=k[0]
+          span
+          - if k[0] != ''
+            b = k[0]
+    .r.level
+      - c.each do |k|
+        i data-code="" data-level = k[0]
+          span
+          - if k[0] != ''
+            b = k[0]
+    .r
+      - d.each do |k|
+        .space data-code = k[1] data-action = k[2]
+          #jp_container_1.jp-audio
+            .jp-type-single
+              .jp-gui.jp-interface
+                .jp-controls
+                  button.jp-play Instrumental
+                .jp-progress
+                  .jp-seek-bar
+                    .jp-play-bar
+
+#js-player_1.jp-jplayer
+.legal
+    'All sounds, samples, brands, trademarks, artworks, or any associated imagery are trademarks and/or copyright material of their respective owners. All rights reserved.
+footer
+  .credits
+    p #Konsole
+    p
+      'Made with
+      i.fa.fa-heart>
+      'by Malik Dellidj
+    ul.links
+      li
+        i.fa.fa-twitter>
+        a href="http://twitter.com/Dathink" target="_blank"
+          '@Dathink
+
+.modal.animated
+  h1 “Harder, Better, Faster, Stronger”
+  h2
+    'Please choose your keyboard
+
+  ul
+    li
+      a href="#" class="js-qwerty btn"
+        'QWERTY
+    li
+      a href="#" class="js-qwertz btn"
+        'QWERTZ
+    li
+      a href="#" class="js-azerty btn"
+        'AZERTY
+  p.credit
+    i.fa.fa-twitter>
+    a href="http://twitter.com/Dathink" target="_blank"
+      '@Dathink

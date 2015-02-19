@@ -91,7 +91,7 @@ ion.sound
       for s in sound_index
         sounds.push {name: (s[2] + i), preload: true}
     return sounds
-  path: 'http://s.cdpn.io/190177/'
+  path: 'path/to/folder'
   preload: true
 
 $ ->
@@ -135,10 +135,10 @@ $ ->
     e.preventDefault()
     processKeyDown $(this), true
 
-  $('#js-daft_1').jPlayer
+  $('#js-player_1').jPlayer
     ready: (event) ->
       $(this).jPlayer 'setMedia',
-        m4a: 'http://s.cdpn.io/190177/instru.mp3'
+        m4a: 'path-to-instrumental.mp3'
     supplied: 'm4a'
     wmode: 'window'
     autoBlur: false
